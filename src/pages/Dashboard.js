@@ -9,9 +9,9 @@ const Dashboard = () => {
 		<main>
 			{/* <Navbar />
 			<Search /> */}
-			<Info />
-			<User />
-			{/* <Repos /> */}
+			{/* <Info />
+			<User /> */}
+			<Repos />
 		</main>
 	);
 };
