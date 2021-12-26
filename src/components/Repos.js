@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useGlobalContext } from "../context/context";
-import { ExampleChart, Pie3D, Column3D, Bar3D, Doughnut2D } from "./Charts";
+import { Pie3D, Column3D, Bar3D, Doughnut2D } from "./Charts";
 const Repos = () => {
 	const { repos } = useGlobalContext();
 	let languages = repos.reduce((total, item) => {
@@ -25,7 +25,9 @@ const Repos = () => {
 	return (
 		<section className="section">
 			<Wrapper className="section-center">
-				<Pie3D data={languages} />;
+				<Pie3D data={languages} />;<div></div>
+				<Doughnut2D data={languages} />
+				<div></div>
 			</Wrapper>
 		</section>
 	);
