@@ -25,7 +25,7 @@ const Search = () => {
 							value={user}
 							onChange={(e) => setUser(e.target.value)}
 						/>
-						<button type="submit">Search</button>
+						{requests > 0 && <button type="submit">Search</button>}
 					</div>
 				</form>
 				<h3>Requests : {requests} / 60</h3>
