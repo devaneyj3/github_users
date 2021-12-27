@@ -5,9 +5,13 @@ import { useGlobalContext } from "../context/context";
 const Search = () => {
 	const [user, setUser] = React.useState();
 
+	const { requests } = useGlobalContext();
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		console.log(user);
+		if (user) {
+		}
 	};
 	return (
 		<section className="center">
@@ -24,7 +28,7 @@ const Search = () => {
 						<button type="submit">Search</button>
 					</div>
 				</form>
-				<h3>Requests : 60 / 60</h3>
+				<h3>Requests : {requests} / 60</h3>
 			</Wrapper>
 		</section>
 	);

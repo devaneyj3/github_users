@@ -12,8 +12,20 @@ export const GithubProvider = ({ children }) => {
 	const [githubUser, setGithubUser] = useState(mockUser);
 	const [repos, setRepos] = useState(mockRepos);
 	const [followers, setFollowers] = useState(mockFollowers);
+	const [requests, setRequests] = useState(0);
+	const [loading, setLoading] = useState(false);
+
+	const checkRequests = async () => {
+		const res = await axios.get(`${rootUrl}/rate_limit`);
+		const {
+			rate: { remaining },
+		} = res.data;
+		setRequests(remaining);
+	};
+
+	useEffect(checkRequests, []);
 	return (
-		<GithubContext.Provider value={{ githubUser, repos, followers }}>
+		<GithubContext.Provider value={{ githubUser, repos, followers, requests }}>
 			{children}
 		</GithubContext.Provider>
 	);
