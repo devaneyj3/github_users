@@ -3,7 +3,17 @@ import styled from "styled-components";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbar = () => {
-	return <Wrapper>navbar component</Wrapper>;
+	const { loginWithRedirect, isAutenticated, logout, user, isLoading } =
+		useAuth0();
+
+	return (
+		<Wrapper>
+			<button onClick={() => loginWithRedirect()}>Log In</button>
+			<button onClick={() => logout({ returnTo: window.location.origin })}>
+				Log Out
+			</button>
+		</Wrapper>
+	);
 };
 
 const Wrapper = styled.nav`
