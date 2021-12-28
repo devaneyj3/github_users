@@ -5,17 +5,21 @@ import { useGlobalContext } from "../context/context";
 const Search = () => {
 	const [user, setUser] = React.useState();
 
-	const { requests } = useGlobalContext();
+	const { requests, error } = useGlobalContext();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(user);
 		if (user) {
 		}
 	};
 	return (
 		<section className="center">
 			<Wrapper className="section-center">
+				{error.show && (
+					<ErrorWrapper>
+						<p>{error.msg}</p>
+					</ErrorWrapper>
+				)}
 				<form onSubmit={handleSubmit}>
 					<div className="form-control">
 						<MdSearch />

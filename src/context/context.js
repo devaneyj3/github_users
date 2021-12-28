@@ -14,18 +14,28 @@ export const GithubProvider = ({ children }) => {
 	const [followers, setFollowers] = useState(mockFollowers);
 	const [requests, setRequests] = useState(0);
 	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState({ show: false, msg: "" });
 
 	const checkRequests = async () => {
 		const res = await axios.get(`${rootUrl}/rate_limit`);
-		const {
+		let {
 			rate: { remaining },
 		} = res.data;
 		setRequests(remaining);
+		if (remaining === 0) {
+			console.log("requests :" + requests);
+			toggleError(true, "sorry, you have exceeded your rate limit");
+		}
+	};
+
+	const toggleError = (show = false, msg = "") => {
+		setError({ msg, show });
 	};
 
 	useEffect(checkRequests, []);
 	return (
-		<GithubContext.Provider value={{ githubUser, repos, followers, requests }}>
+		<GithubContext.Provider
+			value={{ githubUser, repos, followers, requests, error }}>
 			{children}
 		</GithubContext.Provider>
 	);

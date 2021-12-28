@@ -7,7 +7,7 @@ const Dashboard = () => {
 	console.log(data);
 	return (
 		<main>
-			{/* <Navbar /> */}
+			<Navbar />
 			<Search />
 			<Info />
 			<User />
