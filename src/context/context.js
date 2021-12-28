@@ -24,6 +24,13 @@ export const GithubProvider = ({ children }) => {
 		});
 		if (res) {
 			setGithubUser(res.data);
+			const { login, followers_url } = res.data;
+			const repoRequest = await axios.get(
+				`${rootUrl}/users/${login}/repos?per_page=100`
+			);
+			setRepos(repoRequest.data);
+			const followersRequest = await axios.get(`${followers_url}?per_page=100`);
+			setFollowers(followersRequest.data);
 		} else {
 			toggleError(true, "No User Found");
 		}
