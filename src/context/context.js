@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useCallback } from "react";
 import mockUser from "./mockData.js/mockUser";
 import mockRepos from "./mockData.js/mockRepos";
 import mockFollowers from "./mockData.js/mockFollowers";
@@ -42,7 +42,7 @@ export const GithubProvider = ({ children }) => {
 		setLoading(false);
 	};
 
-	const checkRequests = async () => {
+	const checkRequests = useCallback(async () => {
 		const res = await axios.get(`${rootUrl}/rate_limit`);
 		let {
 			rate: { remaining },
@@ -51,13 +51,15 @@ export const GithubProvider = ({ children }) => {
 		if (remaining === 0) {
 			toggleError(true, "sorry, you have exceeded your rate limit");
 		}
-	};
+	});
 
 	const toggleError = (show = false, msg = "") => {
 		setError({ msg, show });
 	};
 
-	useEffect(checkRequests, []);
+	useEffect(() => {
+		checkRequests();
+	}, [checkRequests]);
 	return (
 		<GithubContext.Provider
 			value={{
