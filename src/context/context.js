@@ -25,12 +25,16 @@ export const GithubProvider = ({ children }) => {
 		if (res) {
 			setGithubUser(res.data);
 			const { login, followers_url } = res.data;
-			const repoRequest = await axios.get(
-				`${rootUrl}/users/${login}/repos?per_page=100`
-			);
-			setRepos(repoRequest.data);
-			const followersRequest = await axios.get(`${followers_url}?per_page=100`);
-			setFollowers(followersRequest.data);
+			const data = await Promise.allSettled([
+				axios(`${rootUrl}/users/${login}/repos?per_page=100`),
+				axios(`${followers_url}?per_page=100`),
+			]);
+			const [repos, followers] = data;
+			const status = "fulfilled";
+			if (repos.status === status && followers.status === status) {
+				setRepos(repos.value.data);
+				setFollowers(followers.value.data);
+			}
 		} else {
 			toggleError(true, "No User Found");
 		}
