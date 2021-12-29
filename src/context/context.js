@@ -51,7 +51,7 @@ export const GithubProvider = ({ children }) => {
 		if (remaining === 0) {
 			toggleError(true, "sorry, you have exceeded your rate limit");
 		}
-	});
+	}, []);
 
 	const toggleError = (show = false, msg = "") => {
 		setError({ msg, show });
